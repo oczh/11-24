@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>while ciklus</title>
+</head>
+<body>
+    <h2>Feladat</h2>
+    <p>
+        Kéjünk be prompt ablakon keresztül addig 
+        egész számokat a felhasználótól, amíg 
+        azok összege el nem éri a 100-at. 
+        Biztos, hogy a felhasználói mindig egész
+        számot ír be.
+    </p>
+    <script>
+        // for ciklussal
+        // for(let i = 1; i <= ???; i++) => ezzel nem oldható meg, mert nem tudom hányszor kell futtatni 
+
+        // while ciklus: addig isméltek, amíg az összeg el 
+        // nem éri a 100-at 
+        /*
+            while(feltétel){ // ha igaz, akkor ismétlünk, ha hamis, akkor kilépünk
+                ciklusmag // ezt fogjuk ismételni 
+            }    
+        */
+        let osszeg = 0 // ebben tarolom a beirt szamok összegét
+        while(osszeg < 100){ // amíg az összeg el nem éri a 100-t ismétlek
+            let szam = parseInt(prompt('Kérem a következő számot: '))
+            osszeg = osszeg + szam
+        }
+        alert('A beolvasott számok összeg: ' + osszeg)
+
+
+
+    </script>
+
+</body>
+</html>

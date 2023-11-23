@@ -1,0 +1,57 @@
+<h3>Kérlek add meg az informatika érettségi részfeladatain elért pontszámaid az eredményed kiszámításához!</h3>
+<form [formGroup]="eredmenyekUrlap" (ngSubmit)="onSubmit()" (change)="formChange()" novalidate>
+    <input type="number" name="spgw_pont" formControlName="spgwP" placeholder={{reszfeladatok.spwg.feladat}}><br>
+    <div  *ngIf="!eredmenyekUrlap.controls['spgwP'].valid && (eredmenyekUrlap.controls['spgwP'].dirty || eredmenyekUrlap.controls['spgwP'].touched)">
+        {{reszfeladatok.spwg.feladat}}{{hiba.alt}}
+        <div *ngIf="eredmenyekUrlap.controls['spgwP'].errors?.['min'] || eredmenyekUrlap.controls['spgwP'].errors?.['max']">
+            {{hiba.min_max}}{{reszfeladatok.spwg.max}}
+        </div>
+        <div *ngIf="eredmenyekUrlap.controls['spgwP'].errors?.['required']">
+            {{hiba.required}}
+        </div>
+    </div>
+    <input type="number" name="tablázat_pont" formControlName="tablP" placeholder={{reszfeladatok.tablazat.feladat}}><br>
+    <div  *ngIf="!eredmenyekUrlap.controls['tablP'].valid && (eredmenyekUrlap.controls['tablP'].dirty || eredmenyekUrlap.controls['tablP'].touched)">
+        {{reszfeladatok.tablazat.feladat}}{{hiba.alt}}
+        <div *ngIf="eredmenyekUrlap.controls['tablP'].errors?.['min'] || eredmenyekUrlap.controls['tablP'].errors?.['max']">
+            {{hiba.min_max}}{{reszfeladatok.tablazat.max}}
+        </div>
+        <div *ngIf="eredmenyekUrlap.controls['tablP'].errors?.['required']">
+            {{hiba.required}}
+        </div>
+    </div>
+    <input type="number" name="adatb_pont" formControlName="adbazP" placeholder={{reszfeladatok.adatbazis.feladat}}><br>
+    <div  *ngIf="!eredmenyekUrlap.controls['adbazP'].valid && (eredmenyekUrlap.controls['adbazP'].dirty || eredmenyekUrlap.controls['adbazP'].touched)">
+        {{reszfeladatok.adatbazis.feladat}}{{hiba.alt}}
+        <div *ngIf="eredmenyekUrlap.controls['adbazP'].errors?.['min'] || eredmenyekUrlap.controls['adbazP'].errors?.['max']">
+            {{hiba.min_max}}{{reszfeladatok.adatbazis.max}}
+        </div>
+        <div *ngIf="eredmenyekUrlap.controls['adbazP'].errors?.['required']">
+            {{hiba.required}}
+        </div>
+    </div>
+    <input type="number" name="algoritmizalas_pont" formControlName="algoP" placeholder={{reszfeladatok.algoritmizalas.feladat}}><br>
+    <div  *ngIf="!eredmenyekUrlap.controls['algoP'].valid && (eredmenyekUrlap.controls['algoP'].dirty || eredmenyekUrlap.controls['algoP'].touched)">
+        {{reszfeladatok.algoritmizalas.feladat}}{{hiba.alt}}
+        <div *ngIf="eredmenyekUrlap.controls['algoP'].errors?.['min'] || eredmenyekUrlap.controls['algoP'].errors?.['max']">
+            {{hiba.min_max}}{{reszfeladatok.algoritmizalas.max}}
+        </div>
+        <div *ngIf="eredmenyekUrlap.controls['algoP'].errors?.['required']">
+            {{hiba.required}}
+        </div>
+    </div>
+    <input type="number" name="szobeli_pont" formControlName="szobP" placeholder={{reszfeladatok.szobeli.feladat}}><br>
+    <div  *ngIf="!eredmenyekUrlap.controls['szobP'].valid && (eredmenyekUrlap.controls['szobP'].dirty || eredmenyekUrlap.controls['szobP'].touched)">
+        {{reszfeladatok.szobeli.feladat}}{{hiba.alt}}
+        <div *ngIf="eredmenyekUrlap.controls['szobP'].errors?.['min'] || eredmenyekUrlap.controls['szobP'].errors?.['max']">
+            {{hiba.min_max}}{{reszfeladatok.szobeli.max}}
+        </div>
+        <div *ngIf="eredmenyekUrlap.controls['szobP'].errors?.['required']">
+            {{hiba.required}}
+        </div>
+    </div>
+    <button type="submit" [disabled]="!eredmenyekUrlap.valid">Beküldés</button><br>
+    <button type="button" (click)="clearForm()">Törlés</button>
+</form>
+<input disabled value="Eredményed: {{szazalek}}%"><br>
+<input disabled value="Érdemjegyed: {{erdemjegy}}">

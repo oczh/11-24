@@ -1,0 +1,41 @@
+*{
+    color: #000000 !important;
+}
+
+body{
+    background-color: #E8D8D5; 
+}
+
+a{
+    text-decoration: none;
+}
+
+header img {
+    float: left;
+    height: 85px;
+    background: #555;
+  }
+  
+  header h1 {
+    position: relative;
+    top: 18px;
+    left: 10px;
+  }
+
+  .clear{
+    clear: both;
+  }
+
+  .info_color{
+    background-color: #0096FF;
+  }
+
+  .warn_color{
+    background-color: #BAF700;
+  }
+  .dang_color{
+    background-color: #F70000;
+  }
+  p.justify{
+    text-align: justify;
+  }

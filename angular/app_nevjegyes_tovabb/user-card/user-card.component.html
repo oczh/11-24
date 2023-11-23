@@ -1,0 +1,11 @@
+<div class="border">
+    <p *ngIf="error === false" style="color: red;"><i>Sikeresen törölve</i></p>
+    <p *ngIf="error === true">Sikertelen törlés</p>
+    <h2>{{user?.name}} ({{user?.age}})</h2>
+
+
+    <button (click)="deleteUser()">Törlés</button>
+    <button (click)="editUser()">Módosítás</button>
+    <button *ngIf="!show" (click)="clickShow()">Mutat</button>
+    <p *ngIf="show">{{user?.email}}</p>
+</div>

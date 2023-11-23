@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="./src/MeresiAdat.js"></script>
+        <script src="./src/AllamosanMertAdat.js"></script>
+        <script>
+           // const adat = new MeresiAdat();
+           // adat.meresIdeje = new Date('2022-10-01');
+           // console.log(adat);
+            
+           const a = new AllomasonMertAdat(
+                new Date(),
+                34,
+                'AAB-00'
+           );
+        </script>
+
+        <script>
+            function getOszthatok(szamok, oszto){
+                return kivalogatas(
+                    szamok, 
+                    (elem) => {return elem % oszto == 0}
+                );
+            }
+
+            function kivalogatas(tomb, vizsgalat){
+                const puffer = [];
+
+                for(let i = 0; i < tomb.length; i++){
+                    if(vizsgalat(tomb[i])){
+                        puffer.push(tomb[i]);
+                    }
+                }
+
+                return puffer;
+            }
+
+            const szamok = [3,4,91, -5, 6, 9, 18, -4, 5];
+            // 1) válogassuk ki a páros számokat! => 2-vel osztható 
+            function getParosak(szamok){
+                return getOszthatok(szamok, 2);
+            }
+            // 2) válogassuk ki a negatív számokat! 
+            function getNegativak(szamok){
+                /*const puffer = [];
+                for(let i = 0; i < szamok.length; i++){
+                    if(szamok[i] < 0){
+                        puffer.push(szamok[i]);
+                    }
+                }
+                return puffer;*/
+
+                return kivalogatas(
+                    szamok, 
+                    (elem) => { return elem < 0;}
+                );
+            }
+            // 3) válgossauk ki a 3mal osztható számokat 
+            function getOszhatok3(szamok){
+                return getOszthatok(szamok, 3);
+            }
+
+            console.log(getParosak(szamok));
+            console.log(getNegativak(szamok));
+            console.log(getOszhatok3(szamok));
+        </script>
+    </head>
+</html>

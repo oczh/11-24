@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        Vegyünk fel egy 2 text inputot, a másodikat disabled 
+        tuljandonsággal. Az első inputba írt szöveget, fordított
+        betűsorrendbe írjuk ki a második textboxba. 
+    </p>
+    <input type="text" id="mezo">
+    <input type="text" id="mezo_ford" disabled>
+    <script>
+        const mezoInput = document.getElementById('mezo')
+        const mezoFordInput = document.getElementById('mezo_ford')
+
+        // onchange akkor fut le, ha kilépünk a mezőből és
+        // a mező tartalma megváltozott
+        mezoInput.onchange = function(){ console.log('onchange')}
+       
+        // billentyű leütés esetén fut le (minden bill) - 1. esmény
+        mezoInput.onkeydown = function(){console.log('onkeydown ' + this.value)}
+        // billentyű lenyomás eseétn fut le (képpel rend. bill) - 2. esemény
+        mezoInput.onkeypress = function(){console.log('onkeypress ' + this.value)}
+        // billentyű felengedés esetén fut le (minden bill) - 3. esemény
+        mezoInput.onkeyup = function(){
+            console.log('onkeyup ' + this.value )
+            // split(''): karaktertömböt készít 
+            // reverse(): a tömb elemeit fordított sorrendbe rendezi
+            // join(''): a tömb elemiet egy szöveggé illeszti össze 
+            let value = this.value.split('').reverse().join('')
+            mezoFordInput.value = value
+        }
+
+
+    </script>
+</body>
+</html>

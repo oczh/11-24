@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Összefoglalás</title>
+</head>
+<body>
+    <script>
+        // \t -> tabulátor 
+        const ADATOK = 'AAA\t2022\t05\t15\t12\t00\t23.4' // szöveg 
+        // szövegeken meg tudom hívni a split függvényt, így a szöveget mezőkre bontani
+
+        // 0) írjuk ki külön csak az állomás kódját, valamint a hőmérsékeletet a consolera
+        let mezok = ADATOK.split('\t') // az ADATOK tartalmát felbontom \t karakterek mentén
+        // ha szöveget splitek, akkor annak kimenete szöveg tömb lesz (!! az elemei szövegek !!)
+        // console.log(mezok[0], mezok[6])
+
+        // 1) Az ADATOK felbontásából készítsünk objektumot, amely kulcsai: kod, datum, homerseklet
+        //   kod -> az állomás kódja szövegesen, datum: a mérés dátumideje Date típusú elemként (a Date paraméterei
+        //   számok), homerseklet: a mért hőmérséklet számként 
+        // parseInt(): egésszé alakít (szöveg -> egész), parseFloat(): törtté alakít (szöveg -> tört)
+        let ujAdat = {
+            kod: mezok[0],
+            datum: new Date(parseInt(mezok[1]), parseInt(mezok[2]) - 1, parseInt(mezok[3]), 
+                            parseInt(mezok[4]), parseInt(mezok[5])),
+            homerseklet: parseFloat(mezok[6])
+        }
+        
+        // 2) Készítsünk egy adatLetrehoz függvényt, ami paraméterben kapja az objektumba tárolt értékeket,
+        // amely feladat az objektum létrehozása 
+        // csak 7 paraméterrel hívható a függvény, különben hiba 
+        // a kod legalább 3 karakter, különben hiba  
+        // helyes dátum építhető és nem lehet nagyobb mint az akutális idő, különben 
+        // a homerseklet "helyes szám" [-50;50] intervallumról, különben hiba
+        function adatLetrehoz(kod, ev, honap, nap, ora, perc, homerseklet){
+            // létezik-e érték? 1) ha valamelyik paraméter undefined, akkor nem állították be
+            //                  2) létrejön automatikusan egy arguments tömb, amibe le vannak gyűjtve a paraméterek
+            if(arguments.length !== 7){
+                throw new Error('A létrehozó függvény csak 7 paraméterrel hívható meg!')
+            }
+
+            // kód ellenőrzése 
+            if(typeof(kod) !== "string"){ // Helytelen az adattípus, ezért nem is megyünk, hanem hibával megállunk
+                throw new Error('A létrehozás során a kód paraméter szöveg kell, hogy legyen!')
+            }
+            if(kod.length < 3){ // ha a kód nincs legalább 3 karakter, akkor hiba 
+                throw new Error('A kódnak legalább 3 karakternek kell lennie!')
+            }
+
+            // dátum ellenőrzése 
+            // adattípus
+            if(typeof(ev) !== "number" || typeof(honap) !== "number" || typeof(nap) !== "number" ||
+               typeof(ora) !== "number" || typeof(perc) !== "number"){
+                throw new Error('A dátumidő komponens típusai helytelenek!')
+            }
+
+            // egyedi elvárások: 
+            
+            const most = new Date()
+            if(ev < 1900 || ev > most.getFullYear()){
+                throw new Error('Hibás év komponens!')
+            }
+            if(honap < 1 || honap > 12){
+                throw new Error('A hónap komponens hibás!')
+            }
+            if(nap < 1 || nap > 31){
+                throw new Error('A nap komponens hibás!')
+            }
+            if(ora < 0 || ora > 23){
+                throw new Error('Az óra komponens hibás!')
+            }
+            if(perc < 0 || perc > 59){
+                throw new Error('A perc komponens hibás!')
+            }
+            
+            let datum = new Date(ev, honap - 1, nap, ora, perc)
+            if(most < datum){
+                throw new Error('A mérési adat nem vonatozhat jövőbeni dátumra!')
+            }
+
+            // homerseklet ell. 
+            // a homerseklet (1)"helyes szám" (2)[-50;50] intervallumról, különben hiba
+            if(typeof(homerseklet) !== "number"){
+                throw new Error('A homerseklet típusa helytelen!')
+            }
+            if(homerseklet < -50 || homerseklet > 50){
+                throw new Error('A homerseklet értéke helytelen!')
+            }
+            // ha minden rendben adjuk vissza a létrehozott obj. 
+            let ujAdat = {
+                kod, // kod: kod, a kod kulcshoz hozzárendeljük a kod paraméter értékét 
+                datum, // datum: datum, a datum kulcshoz hozzárendeljük a datum változó értékét 
+                homerseklet // homerseklet: homerseklet, a homerseklet kulcshoz rendeljük a homerseklet paraméter értékét 
+            }
+            return ujAdat
+        }
+
+
+        // ADATOK2: egy-egy soroában egy-egy mérési adat, a mérési adatok a korábbi struktúrban (\t)
+        // \r\n -> sorvége karakter Windowsban
+        const ADATOK2 = 'AAA\t2022\t05\t05\t12\t31\t19.8\r\n'+
+                        'AAA\t2022\t06\t15\t23\t31\t12\r\n'+
+                        'BBB\t2022\t05\t05\t12\t45\t22.3'
+        // Írjunk olyan szkriptet, ami az ADATOK2-ből egy objektumtömböt készít (felhasználva az 
+        // adatLetrhoz függvényt)
+        const beolvasottAdatok = []
+        let sorok = ADATOK2.split('\r\n') // ADATOK2-t soronként felbontom 
+        for(let i = 0; i < sorok.length; i++){ // minden sort fel szeretnék dolgozni 
+           let sor = sorok[i]
+           let mezok = sor.split('\t') // az éppen feldolgozandó sort felbontom \t karakterek mentén 
+
+           // kiemelem az adatokat / szükség esetén parse 
+           let kod = mezok[0]
+           let ev = parseInt(mezok[1])
+           let hn = parseInt(mezok[2])
+           let n = parseInt(mezok[3])
+           let o = parseInt(mezok[4])
+           let p = parseInt(mezok[5])
+           let h = parseFloat(mezok[6])
+
+           // létrehozom az objkeutmok 
+           let ujAdat = adatLetrehoz(kod, ev, hn, n, o, p, h)
+           // hozzáadom a tömbhöz az újAdtot 
+           beolvasottAdatok.push(ujAdat)
+        }
+
+
+        /*
+            2.	Határozza meg minden állomás esetén, hogy mi volt adott évben a legmagasabb mért hőmérséklet. 
+                Ehhez a függvény az évet és az adatokat paraméterben kapja, az év paramétere alapértelmezés 
+                szerint legyen az aktuális év. A visszatérési érték olyan objektum, amelyben a kulcsok az 
+                állomások kódjai, az értékek pedig a legnagyobb mért adatok az évben. Minden állomás 
+                szerepeljen a listában, amely az adatok tömbben előfordul, ha az adott állomás esetén nem 
+                állapítható meg az évben legnagyobb érték (nincs adat), akkor az érték ebben az esetben 
+                legyen null. 
+
+                BEMENET: ev = 2023, adatok = [ {kod: AAA, datum: 2023..., 19.8}, .... ]
+                KIMENET: { AAA: 19.8}
+        */
+       function feladat2(adatok, ev){
+            if(ev === undefined){
+                const most = new Date() // ha nincs paraméter, akkor az aktuális rendszerdátumidő
+                ev = most.getFullYear() // lekérdezem az év komponenst 
+            }
+        
+            // 1) a futáshoz legalább 1 paraméternek adottnak kell lennie, ami object típusú 
+            //    ezen túlmenően elfogadunk 2 paraméteres hívást is, ekkor az első object, a második number típusú
+            //    csak a fenti két paraméterezést fogadjuk el, minden más esetre hibát dobunk 
+            if(arguments.length === 1 && typeof(adatok) !== "object"){
+                throw new Error('Az első paraméter típusa object kell, hogy legyen!')
+            }
+            else if(arguments.length === 2 && (typeof(adatok) !== "object" || typeof(ev) !== "number")){
+                throw new Error('A paraméter(ek) típusa helytelen!')
+            }
+            else if(arguments.length !== 1 && arguments.length !== 2){
+                throw new Error('A függvény csak 1 vagy 2 paraméterrel hívható!')
+            }
+
+            // 2.1) Készítsünk egy olyan objektumot, amelyben minden állomáskód, mint kulcs szerepel, 
+            // a kulcshoz rendelt legyen null  
+            let statisztika = {} 
+            for(let i = 0; i < adatok.length; i++){ // ahhoz, hogy minden kulcsot létrehozzak, minden adatot végig kell nézni 
+                let adat = adatok[i] // a konkrét objektum, amivel foglalkozni szeretnék 
+                let kulcs = adat.kod // az új obj. az adathoz tartozó kódot szeretném kulcsként használni
+
+                // érték in obj: igaz, ha az érték kulcsként szerepel az objektumban 
+                if(!(kulcs in statisztika)){ // ha a statisztikában még nem szerepel kulcsként a kód 
+                    statisztika[kulcs] = null  // létrehozom a kulcs értéke alapján a statisztika mezőjét null értékkel
+                }
+            }
+            console.log(statisztika)
+
+       }
+        
+       feladat2(beolvasottAdatok, 2022)
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objektumok létrehozása</title>
+</head>
+<body>
+    <p>
+        1. Készítsünk két várost objektumként: Eger (3330), Budapest (1051). Mindkét objektumnak legyen 
+        egy getAdatok függvénye, amely "Településnév (irsz)"" formában szövegesen visszaadja a tárolt adatokat.
+    </p>
+    <script>
+        let egerVaros = { // létrehozom az objektumot {} között
+            // felveszem az adatmező neve: érték formában az adatokat 
+            irsz: 3300, // irsz névvel érem el, numerikus érték  
+            nev: 'Eger', // nev névvel érem el, szöveges érték
+
+            // függvények definiálsa függvény neve: function() {} formában 
+            getAdatok: function(){
+                // az objektum által birtokolt elemekre (mezők/függvények) this előtaggal kell előtaggal kell hivatkozni 
+                return this.nev + ' (' + this.irsz + ')'
+            }
+        }
+        console.log(egerVaros)
+
+        // Budapest város szerkezete UGYANEZ, csak más adatokat kell bele tölteni, DE UGYANILYEN MEZŐKRE 
+        // ÉS UGYANILYEN FÜGGVÉNYEKRE VAN SZÜKSÉG => lemásolom egerVaros-t és módostok benne 
+        let bpVaros = { // létrehozom az objektumot {} között
+            // felveszem az adatmező neve: érték formában az adatokat 
+            irsz: 1051, // irsz névvel érem el, numerikus érték  
+            nev: 'Budapest', // nev névvel érem el, szöveges érték
+
+            // függvények definiálsa függvény neve: function() {} formában 
+            getAdatok: function(){
+                // az objektum által birtokolt elemekre (mezők/függvények) this előtaggal kell előtaggal kell hivatkozni 
+                return this.nev + ' (' + this.irsz + ')'
+            }
+        }
+        console.log(bpVaros)
+
+        // !! több ugyanolyan szerkezetű elemet használunk, a szerkezet másolásához copy-paste módszert haszn.
+
+    </script>
+
+    <p>
+        2. Készítsünk olyan függvényt, amellyel városokat lehet létrehozni (irsz-mal, névvel és getAdatok fgv-vel)
+    </p>
+    <script>
+        // felveszek egy függvényt, amivel városokat tudok generálni 
+        function varosLetrehoz(varosIrsz, varosNev){
+            // ... létrehozza a várost ... 
+            let ujVaros = {
+                irsz: varosIrsz,
+                varos: varosNev, 
+
+                getAdatok: function(){
+                    // az objektum által birtokolt elemekre (mezők/függvények) this előtaggal kell előtaggal kell hivatkozni 
+                    return this.varos + ' (' + this.irsz + ')'
+                }
+            }
+            return ujVaros
+
+        }
+
+        // cimek tárolásra alkalams objektumok generálása (város (irsz + név), cim )
+        function cimLetrehoz(cimIrsz, cimVarosNev, cimCim){
+            // kiindulok egy városból (így lesz már irsz és városnév részem)
+            let ujCim = varosLetrehoz(cimIrsz, cimVarosNev)
+            // új mezőkkel egészítem ki a meglévő objektumomat (egy egyszerű beállítással)
+            ujCim.cim = cimCim // ha nem létezik bejegyzés hozzáadom 
+            // probléma, hogy a getAdatok a városadatokat adja vissza, ez így nem jó, mert 
+            // a) vagy ne legyen benne a getAdatok fgv
+            //delete ujCim.getAdatok // delete után leírva az objektum.mező / függvény hivatkozást tudom törölni
+            // b) megváltoztatom a getAdatok működését a saját függvényemre 
+            ujCim.getAdatok = function(){ // ha létezik a mező/függvény, akkor új értéket tudok adni neki  
+                return this.irsz + ' ' + this.varos + ', ' + this.cim
+            }
+            
+            console.log(ujCim.getAdatok())
+        }
+
+        let eger = varosLetrehoz(3300, 'Eger') // 3300 és Eger
+        console.log(eger.getAdatok())
+        let budapest = varosLetrehoz(1051, 'Budapest') // 1051 és Budapest
+        console.log(budapest.getAdatok())
+
+        let cim1 = cimLetrehoz(1051, 'Budapest', 'Madarász Viktor utca 11.')
+    </script>
+</body>
+</html>

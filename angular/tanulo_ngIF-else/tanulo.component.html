@@ -1,0 +1,25 @@
+<!-- standard interpoláció mindig megjelenik -->
+<div>
+    {{tanulo.nev}}
+</div>
+
+<!-- *ngIf direktíva: a tartalmat csak akkor látom ha a direktívához rendelt 
+logikai érték igaz  -->
+<div *ngIf="tanulo.statusz">
+    {{tanulo.nev}} megjelent a tanórán. 
+</div>
+<div *ngIf="!tanulo.statusz">
+    {{tanulo.nev}} NEM jelent meg a tanórán. 
+</div>
+
+<!-- if-else szerkezet készítése a nézetek generálása során-->
+<!-- ha az ngIf igaz, akkor megjelnik a div, ha az ngIf hamis, akkor a nemJelentMeg
+azonosítóval rendelkező része fog az oldalnak megjelnni-->
+<div *ngIf="tanulo.statusz; else nemJelentMeg">
+    {{tanulo.nev}} megjelent a tanórán. 
+</div>
+<ng-template #nemJelentMeg>
+    <div>
+        {{tanulo.nev}} NEM jelent meg a tanórán. 
+    </div>
+</ng-template>

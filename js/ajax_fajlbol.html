@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fájlok beolvasása</title>
+</head>
+<body>
+    <script>
+        // Js-ben közvetlen fájlbeolvasás vagy írás a fájlrendszeren nincs (biztonsági rés)
+        // js-ben egy fájl eléréséhez első lépéséként azt http prtokollon keresztül 
+        // elérhetővé kell tenni, mivel a js http kéréseket tud küldeni
+        const URL = 'http://localhost:5500/example1.csv'; // live server miatt
+        // http kérést küldünk az url-re, és mivel ott egy fájl áll, így megkapjuk annak tartalmát
+        const METHOD = 'GET'; // kell a kéréshez és get mivel "le akarok tölteni"
+
+        // a kérést küldhetjük szinkron vs aszinkron módon 
+        // aszinkron: elindítjuk a kérést, de nem várakozunk, hanem megyünk 
+        // tovább a végrehajtásban, és ha meglesz válasz, arról tájékoztatást kapunk
+        // 1) létrehozuk egy XmlHttpRequest objektumot 
+        let syncRequest = new XMLHttpRequest();
+
+        // aszinkron callback fgv behelyettesítés 
+        syncRequest.onload = function(){ // akkor fut le, ha befejeződött a kérés végrehajtása és megvan a válasz
+            if(syncRequest.status === 200) console.log('Eredmény: ' + syncRequest.responseText)
+            else console.log('Hibaüzenet: ' + syncRequest.statusText);
+        }
+
+        // 2) felparaméterezem a kérést (URL + METÓDUS)
+        syncRequest.open(METHOD, URL); // alpért. szerint aszinkron kérést hozunk létre
+        // 3) elküldöm a kérést 
+        syncRequest.send();
+        // 4) feldolgozom az eredményt 
+        // console.log(syncRequest); // aszinkron végrehajtást így nem kezelhetünk,
+        // hanem a kérés elküldése előtt megvalósítjuk a megfelelő eseményt (cb fgv) 
+
+
+    </script>
+</body>
+</html>

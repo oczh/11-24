@@ -1,0 +1,35 @@
+<h3>Beviteli űrlap</h3>
+<div *ngIf="infoMessage">{{infoMessage}}</div>
+<div *ngIf="errorMessage">{{errorMessage}}</div>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <input type="text" name="name" placeholder="Name" formControlName="name"><br>
+    <div *ngIf="!userForm.controls['age'].valid && (userForm.controls['age'].dirty || userForm.controls['age'].touched)">
+        Az age mező tartalma helytelen!
+        <div *ngIf="userForm.controls['age'].errors?.['age']">
+            Az életkor az age validátoron bukott meg, amely szerint az érték nem 0 és 100 közötti numerikus érték!
+        </div>
+        <div *ngIf="userForm.controls['age'].errors?.['type']">
+            Az age validátor szerint hibás az adattípus az elfogadott típus: {{userForm.controls['age'].errors?.['type']}}
+        </div>
+        <div *ngIf="userForm.controls['age'].errors?.['minValue']">
+            Az age validátor szerint túl kicsi az értékét, az elfogadott minimum érték: {{userForm.controls['age'].errors?.['minValue']}}
+        </div>
+        <div *ngIf="userForm.controls['age'].errors?.['maxValue']">
+            Az age validátor szerint túl nagy az érték, az elfogadott maximum érték: {{userForm.controls['age'].errors?.['maxValue']}}
+        </div>
+    </div>
+    <input type="number" name="age" placeholder="Age" formControlName="age"><br>
+    <input type="email" name="email" placeholder="Email" formControlName="email"><br>
+    <div *ngIf="!userForm.controls['image'].valid && (userForm.controls['image'].touched || userForm.controls['image'].dirty)">
+        <div *ngIf="userForm.controls['image'].errors?.['url']">
+            <div *ngIf="userForm.controls['image'].errors?.['acceptedProtocols']">
+                Helytelen protokoll megadás, elfogadott protokollok: {{userForm.controls['image'].errors?.['acceptedProtocols']}}
+            </div>
+            <div *ngIf="userForm.controls['image'].errors?.['acceptedDomains']">
+                Helytelen tartomány megadás, elfogadott tartományok: {{userForm.controls['image'].errors?.['acceptedDomains']}}
+            </div>
+        </div>
+    </div>
+    <input type="url" name="image" placeholder="Image" formControlName="image"><br>
+    <button type="submit" [disabled]="!userForm.valid">Beküldés</button>
+</form>

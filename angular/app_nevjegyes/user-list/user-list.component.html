@@ -1,0 +1,35 @@
+<p *ngIf="loading">Adatok betölése folyamatban...</p>
+<p *ngIf="!status">Hiba történt a kérés kiszolgálása során...</p>
+
+<!-- ha nincs egyetlen rekord sem, akkor "Sajnos nincs rögzítve felhasználó!" szöveg, 
+ellenkező esetben táblázatosan a user neve, email címe és avatarja jelenjen meg, 
+valamint a születési idő -->
+<h2>Kiválaszott felhasználó adatlap</h2>
+<app-user-details *ngIf="selectedUser" [actualUser]="selectedUser"></app-user-details>
+<h2>Felhasználói lista</h2>
+<table *ngIf="users.length !== 0; else noUser">
+    <thead>
+        <tr>
+            <th>Név</th>
+            <th>Email</th>
+            <th>Kép</th>
+            <th>Születési év</th>
+            <th>Műveletek</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.Name}}</td>
+            <td>{{user.Email}}</td>
+            <td><img [src]="user.AvatarUrl"></td>
+            <td>{{user.BirthYear}}</td>
+            <td>
+                <button *ngIf="user !== selectedUser" type="button" (click)="onClick(user)" >Részletek...</button>
+                <button type="button" (click)="deleteUser(user)">Törlés</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #noUser>
+    <p>Sajnos nincs rögzítve felhasználó!</p>
+</ng-template>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+    <h3>Feladat</h3>
+    <h4></h4>
+    <p id="task"></p>
+    <script>
+        
+        document.getElementById("task").innerHTML = 'Eredmény: '
+    </script>
+    -->
+    <h3>1. Feladat</h3>
+    <h4>Írasd ki egy tetszőleges elemszámú, csak egész számokat tartalmazó tömb legkisebb elemét!</h4>
+    <p id="1_task"></p>
+    <script>
+        const arr = []
+        for(i = 1; i <= 12; i++){
+            const num = parseInt(Math.random() * 200 - 100)
+            arr.push(num)
+        }
+        console.log(arr)
+        //const arr = [1, 4, 6, 67, -12, 0]
+        let min = 0
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i] < min){
+                min = arr[i];
+            }
+        }
+        document.getElementById("1_task").innerHTML = '1. Eredmény: ' + min
+    </script>
+
+    <h3>2. Feladat</h3>
+    <h4>Írasd ki egy tetszőleges elemszámú, csak egész számokat tartalmazó tömb páros elemeinek a számát!</h4>
+    <p id="2_task"></p>
+    <script>
+        let even_numbers = []
+        for(let i = 0; i < arr.length; i++){
+            if(arr[i] % 2 === 0){
+                even_numbers.push(arr[i])
+            }
+        }
+        document.getElementById("2_task").innerHTML = '2. Eredmény: ' + even_numbers.length
+    </script>
+
+    <h3>3. Feladat</h3>
+    <h4>Írasd ki egy tetszőleges elemszámú, csak egész számokat tartalmazó tömb harmadik legnagyobb elemét!</h4>
+    <p id="3_task"></p>
+    <script>
+        third_max = 0
+        let arr2 = []
+        for(let i = 0; i < arr.length; i++){
+            arr2.push(arr[i])
+        }
+        for(let i = 1; i <= 3; i++){
+            third_max = Math.max(...arr2)
+            arr2.splice(arr2.indexOf(Math.max(...arr2)), 1)
+            //delete metódus ott hagy a helyén egy üres elemet
+        }
+        document.getElementById("3_task").innerHTML = '3. Eredmény: ' + third_max
+    </script>
+
+    <h3>4. Feladat</h3>
+    <h4>Adott egy tetszőleges elemszámú, csak egész számokat tartalmazó tömb. A tömb elemeit rendezzük növekvő sorrendbe. 
+        Ezután a felhasználótól kérjünk be egy számot (addig kérjünk be értéket, míg valóban egy véges egész számot ad meg). 
+        A számot szúrjuk be a tömbbe úgy, hogy a tömb továbbra is rendezett maradjon, tehát a megfelelő indexű helyre kerüljön be a plusz elem. 
+        Írasd ki a rendezett tömböt!</h4>
+    <p id="4_task"></p>
+    <script>
+        //?fontos itt a feladatban az "ezután"?
+        let arr3 = []
+        for(let i = 0; i < arr.length; i++){
+            arr3.push(arr[i])
+        }
+        let new_num
+        let valid = false
+        while(valid == false){
+            new_num = parseFloat(prompt('Kérek egy egész számot!'))
+            //parseInt egyészre kerekíti is, paseFloat szám lesz a stringből
+            valid = new_numValid(new_num)
+        }
+        function new_numValid(nn){
+            if(isNaN(nn)){
+                alert('A megadott érték SZÁM kell, hogy legyen!')
+                return false
+            }
+            if(Number.isInteger(nn) == false){
+                alert('A megadott érték EGÉSZ szám kell, hogy legyen!')
+                return false
+            }
+        }
+        let inc_arr = []
+        while(arr3.length > 0){
+            inc_arr.push(Math.min(...arr3))
+            arr3.splice(arr3.indexOf(Math.min(...arr3)), 1)
+        }
+        document.getElementById("4_task").innerHTML = '4. Eredmény: ' + inc_arr
+    </script>
+
+<h3>5. Feladat</h3>
+<h4>Adott egy tömb, mely azonos darabú egész számot, és szöveget tartalmaz véletlenszerű sorrendben. Rendezzük úgy a tömböt, hogy minden szám után egy string következzen! Írasd ki a rendezett tömböt!
+</h4>
+<p id="5_task"></p>
+<script>
+    
+    document.getElementById("5_task").innerHTML = 'Eredmény: '
+</script>
+</body>
+</html>

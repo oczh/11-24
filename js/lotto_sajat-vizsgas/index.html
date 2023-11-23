@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottó feladat</title>
+    <script src="/src/feldolgozas.js"></script>
+    <script src="/src/fajlkezeles.js"></script>
+    <script>
+        let request = new XMLHttpRequest()
+        request.onload = function(){
+            if(request.status === 200){
+                //console.log('Eredmény: ' + request.responseText)
+                console.log(mindenHetSzerepelE(konvertal(request.responseText)))
+                console.log(hibasSzamok(konvertal(request.responseText)))
+                //console.log(legtobbszorKihuzott(konvertal(request.responseText)))
+            } 
+            else console.log('Hibaüzenet: ' + request.statusText)
+        }
+        request.open('GET', '/data/lotto.csv')
+        request.send()
+    </script>
+</head>
+<body>
+    <button onclick="(legtobbszorKihuzott(konvertal(request.responseText)))">6.feladat</button>
+</body>
+</html>

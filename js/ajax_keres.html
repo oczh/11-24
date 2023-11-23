@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szerver adatletöltés</title>
+    <style>
+        div.post{
+            background-color: lightblue;
+            border: 1px solid black;
+            padding: 5px;
+            margin: 5px;
+        }
+        div.post h2{
+            color: green;
+            margin: 0px;
+        }
+        div.post p{
+            font-style: italic;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Kérjük le az adatokat a https://jsonplaceholder.typicode.com/posts
+        URL-ről (JSON-t ad vissza) aszinkron módon GET kéréssel. Ha a kérés 
+        végrehajtása sikeresnek bizonyul, akkor írjuk ki egy felugró ablakban, hogy
+        oké, ellenekező esetben logoljuk a konzolra, hogy hiba.
+    </p>
+    <script>
+        const URL = 'https://jsonplaceholder.typicode.com/posts';
+        const METHOD = 'GET';
+
+        let httpReq = new XMLHttpRequest();
+        httpReq.onload = function(){ // a kérés végén feldolgozom az eredményt 
+            // a statászkód a kéréstől függ (más jó a GET, POST, ... esetekben)
+            if(httpReq.status !== 200){ // ált. azt ellenőrizzük, hogy helytelen-e az eredmény és ilyenkor hibát dobunk
+                // hibát 
+                throw new Error('Hiba a kérés végrehajtásában, üzenet: ' + httpReq.statusText);
+            }
+           
+            // ha az if nem dobott kivételt, csak akkor jutunk ide 
+            // a válaszban kapott üzenet mindig szöveg, így JSON esetén át kell konvertálnunk JS objektummá/tömbbé
+            let data = JSON.parse(httpReq.responseText); // a JSON.parse() szövegből JS objektumokat/tömböket konvertál 
+            //console.log(data);
+            for(let i = 0; i < data.length; i++){
+                createPostDiv(data[i]);
+            }
+
+            // FELADAT: hozzunk létre minden egyes posthoz egy post divet és töltsük ki a megfelelő 
+            // adatokkal, az egyes postokat adjuk hozzá a poszt listához 
+        }
+        httpReq.open(METHOD, URL); // paraméterezés történik (nem indul el a kérés)
+        httpReq.send(); // elküldöm a kérést a szerver oldal felé 
+
+        function createPostDiv(post){
+            // meglévő elem visszakeresése getElementById 
+            const postList = document.getElementById('posts');
+
+            // létrehozok egy új divet a postnak 
+            const div = document.createElement("div"); // <div></div>
+            div.className = "post"; // <div class="post"></div>
+
+            const h2 = document.createElement("h2"); //<h2></h2>
+            h2.innerText = post.title; //<h2>...</h2>
+            div.appendChild(h2); // <div class="post"><h2>...</h2></div>
+
+            const p = document.createElement("p");
+            p.innerText = post.body;
+            div.appendChild(p);
+
+            const a = document.createElement('a');
+            a.innerText = 'Hozzászólások mutat';
+            a.href = '#';
+            a.onclick = function(){
+                console.log(post.id);
+                return false; // js-ben az alapért. működése megakadályozása 
+            }
+            div.appendChild(a);
+
+            // hozzáfűzom a divet a postok listájához 
+            postList.appendChild(div);
+        }
+    </script>
+
+    <!--
+        A korábbi post diveket egészítsük ki egy "hozzászólások mutat" linkkel, amelyre ha rákattintunk 
+        akkor le logoljuk a konzolra a kattintott post id-jét 
+    -->
+    
+    <div class="post">
+        <h2>Title</h2>
+        <p>Body</p>
+        <a href="#">Hozzászólások mutat</a>
+    </div>
+
+    <div id="posts"></div>
+</body>
+</html>

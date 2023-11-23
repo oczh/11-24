@@ -1,0 +1,11 @@
+<p>A játék során {{min}} és {{max}} számok között generálunk egy véletlen számot.</p>
+<p *ngIf="tippeltSzam == gondoltSzam">
+    Gratulálok! Ön nyert!
+</p>
+<p *ngIf="tippeltSzam != gondoltSzam && szamok.length == 2">
+    Sajnáljuk! Ön veszített a játékban!
+</p>
+
+<div *ngIf="szamok.length > 2 && tippeltSzam != gondoltSzam">
+    <button *ngFor="let szam of szamok" (click)="buttonClick(szam)">{{szam}}</button>
+</div>

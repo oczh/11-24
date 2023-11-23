@@ -1,0 +1,28 @@
+<!-- formGroup direktívával összekapcsolom a modelt és a sablont-->
+<!-- []: egyirányú kapcsolat -->
+<form [formGroup]="kapcsolatiUrlap" (ngSubmit)="onSubmit()" novalidate>
+    <input type="text" name="vezeteknev" placeholder="Vezetéknév" formControlName="vezeteknev"><br>
+    <div *ngIf="!vnev?.valid && (vnev?.touched || vnev?.dirty)">
+        Valami baj van a vezeteknev mezővel4
+    </div>
+    <input type="text" name="keresztnev" placeholder="Keresztnév" formControlName="keresztnev"><br>
+    <input type="email" name="email" placeholder="Email cím" formControlName="email"><br>
+    <input type="tel" name="telefon" placeholder="Telefonszám" formControlName="telszam"><br>
+    <label>Nem:</label>
+    <input type="radio" name="nem" value="no" formControlName="nem">Nő
+    <input type="radio" name="nem" value="ffi" formControlName="nem">Férfi<br>
+    <label>Házas:</label>
+    <input type="checkbox" name="hazas" formControlName="hazas"><br>
+    <label>Állampolgárság:</label>
+    <select name="allampolgarsag" formControlName="allampolgarsag">
+        <option value="1">magyar</option>
+        <option value="2">horvát</option>
+        <option value="3">lengyel</option>
+    </select><br>
+    <div formGroupName="cim">
+        <input type="text" name="irsz" placeholder="Irányítószám" formControlName="irsz">
+        <input type="text" name="varos" placeholder="Város" formControlName="varos">
+        <input type="text" name="cim" placeholder="Egyéb címrész" formControlName="cim">
+    </div>
+    <button type="submit" [disabled]="!kapcsolatiUrlap.valid">Beküld</button>
+</form>

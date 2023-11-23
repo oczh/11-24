@@ -1,0 +1,42 @@
+<h3>Kérlek add meg az informatika érettségi részfeladatain elért pontszámaid az eredményed kiszámításához!</h3>
+<form #erettsegiTDForm="ngForm" (ngSubmit)="onSubmit(erettsegiTDForm)" (change)="formChange()" novalidate>
+    <input type="number" name="spgw_pont" placeholder={{reszfeladatok.spwg.feladat}}
+        ngModel #spP="ngModel" required min="0" max={{reszfeladatok.spwg.max}}><br>
+    <div *ngIf="!spP.valid && (spP.dirty || spP.touched)">
+        {{reszfeladatok.spwg.feladat}}{{hiba.alt}}
+        <span *ngIf="spP.errors?.['required']">{{hiba.required}}</span>
+        <span *ngIf="spP.errors?.['min'] || spP.errors?.['max']">{{hiba.min_max}}{{reszfeladatok.spwg.max}}</span>
+    </div>
+    <input type="number" name="tablazat_pont" placeholder={{reszfeladatok.tablazat.feladat}} 
+        ngModel #taP="ngModel" required min="0" max={{reszfeladatok.tablazat.max}}><br>
+    <div *ngIf="!taP.valid && (taP.dirty || taP.touched)">
+        {{reszfeladatok.tablazat.feladat}}{{hiba.alt}}
+        <span *ngIf="taP.errors?.['required']">{{hiba.required}}</span>
+        <span *ngIf="taP.errors?.['min'] || taP.errors?.['max']">{{hiba.min_max}}{{reszfeladatok.tablazat.max}}</span>
+    </div>
+    <input type="number" name="adatb_pont" placeholder={{reszfeladatok.adatbazis.feladat}}  
+        ngModel #adP="ngModel" required min="0" max={{reszfeladatok.adatbazis.max}}><br>
+    <div *ngIf="!adP.valid && (adP.dirty || adP.touched)">
+        {{reszfeladatok.adatbazis.feladat}}{{hiba.alt}}
+        <span *ngIf="adP.errors?.['required']">{{hiba.required}}</span>
+        <span *ngIf="adP.errors?.['min'] || adP.errors?.['max']">{{hiba.min_max}}{{reszfeladatok.adatbazis.max}}</span>
+    </div>
+    <input type="number" name="algoritmizalas_pont" placeholder={{reszfeladatok.algoritmizalas.feladat}}  
+        ngModel #alP="ngModel" required min="0" max={{reszfeladatok.algoritmizalas.max}}><br>
+    <div *ngIf="!alP.valid && (alP.dirty || alP.touched)">
+        {{reszfeladatok.algoritmizalas.feladat}}{{hiba.alt}}
+        <span *ngIf="alP.errors?.['required']">{{hiba.required}}</span>
+        <span *ngIf="alP.errors?.['min'] || alP.errors?.['max']">{{hiba.min_max}}{{reszfeladatok.algoritmizalas.max}}</span>
+    </div>
+    <input type="number" name="szobeli_pont" placeholder={{reszfeladatok.szobeli.feladat}}  
+        ngModel #szP="ngModel" required min="0" max={{reszfeladatok.szobeli.max}}><br>
+    <div *ngIf="!szP.valid && (szP.dirty || szP.touched)">
+        {{reszfeladatok.szobeli.feladat}}{{hiba.alt}}
+        <span *ngIf="szP.errors?.['required']">{{hiba.required}}</span>
+        <span *ngIf="szP.errors?.['min'] || szP.errors?.['max']">{{hiba.min_max}}{{reszfeladatok.szobeli.max}}</span>
+    </div>
+    <button type="submit" [disabled]="!erettsegiTDForm.valid">Beküldés</button><br>
+    <button type="button" (click)="clearForm(erettsegiTDForm)">Törlés</button>
+</form>
+<input disabled value="Eredményed: {{szazalek}}%"><br>
+<input disabled value="Érdemjegyed: {{erdemjegy}}">

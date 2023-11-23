@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="O. Czeizing Hedvig">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="icon" type="image/x-icon" href="/img/logo.jpg">
+        <link rel="stylesheet" href="/style/style.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title>Időjárás állomás</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="allomasok.html">
+                <img src="/img/logo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+                Időjárás állomás
+            </a>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/allomasok.html">Nyitóoldal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/riasztasok.html">Riasztások</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/kapcsolat.html">Kapcsolat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" target="_blank" href="https://www.met.hu/">OMSZ</a>
+                </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container text-left">
+            <div class="row">
+              <div class="col">
+                <h2>OMSZ Központ székhelye</h2>
+                <p>Cím: 1024 Budapest, Kitaibel Pál u. 1.</p>
+                <div class="mapouter">
+                    <div class="gmap_canvas">
+                        <iframe src="https://maps.google.com/maps?q=budapest%20kitabiel%20p%C3%A1t%20utca%201&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=&amp;output=embed" frameborder="0" scrolling="no" style="width: 490px; height: 400px;"></iframe>
+                        <style>.mapouter{position:relative;height:400px;width:490px;background:#fff;} .maprouter a{color:#fff !important;position:absolute !important;top:0 !important;z-index:0 !important;}</style>
+                        <a href="https://blooketjoin.org">blooket join</a>
+                        <style>.gmap_canvas{overflow:hidden;height:400px;width:490px}.gmap_canvas iframe{position:relative;z-index:2}</style>
+                    </div>
+                </div>
+              </div>
+              <div class="col">
+                <h2>Kapcsolat</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Email cím</label>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlInput2" class="form-label">Üzenet tárgya</label>
+                        <input type="texz" class="form-control" id="exampleFormControlInput2" placeholder="Üzenet tárgya" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Üzenet szövege</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-outline-secondary">Küldés</button>
+                </form>
+              </div>
+            </div>
+    </body>
+</html>

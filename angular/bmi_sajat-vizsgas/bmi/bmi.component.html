@@ -1,0 +1,32 @@
+<button (click)="decWeight()">Súly csökkentése</button>
+<input type="text" placeholder="{{weight}}">
+<button (click)="incWeight()">Súly növelése</button><br>
+
+<button (click)="decHeight()">Magasság csökkentése</button>
+<input type="text" placeholder="{{height}}">
+<button (click)="incHeight()">Magasság növelése</button><br>
+
+<button (click)="calculateBmi()">Számol</button>
+<p>BMI értéke: {{bmi}}</p>
+<!--
+<div ngIf="bmi == undefined">Testsúly eloszlás: nem számolható </div>
+<div ngIf="bmi != undefined">Testsúly eloszlás: {{bmiClass(bmi)}} </div>
+-->
+<div>Testsúly eloszlás: 
+    <span *ngIf="bmi == undefined">nem számolható</span>
+    
+        
+    
+
+    <span *ngIf="bmi !== undefined && bmi > 40">extrém elhízás</span>
+    <span *ngIf="bmi !== undefined && bmi > 35 && 40 >= bmi">túlzott elhízás</span>
+    <span *ngIf="bmi !== undefined && bmi > 30 && 35 >= bmi">elhízás</span>
+    <span *ngIf="bmi !== undefined && bmi > 25 && 30 >= bmi">túlsúly</span>
+    <span *ngIf="bmi !== undefined && bmi > 18.5 && 25 >= bmi">normális testsúly</span>
+    <span *ngIf="bmi !== undefined && bmi > 17 && 18.5 >= bmi">enyhe soványság</span>
+    
+    <span *ngIf="bmi !== undefined && bmi > 16 && 17 >= bmi">mérsékelt soványság</span>
+    <span *ngIf="bmi !== undefined && bmi < 16">kóros soványság</span>
+
+</div>
+

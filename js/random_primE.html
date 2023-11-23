@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For ciklus feladatok</title>
+</head>
+<body>
+    <h2>1. feladat</h2>
+    <p>
+        Készítsünk programot, amely kiszámolja n! értékét! 
+        n! = 1 * 2 * 3 * ... (n-1) * n. Faktoriális: 1-től n-ig a számok szorzata!
+    </p>
+    <script type="text/javascript">
+        // 5! = 1 * 2 * 3 * 4 * 5 = 120  // első tényező: 1, utolsó tényező: 5, lépésköz: 1
+        
+        // a ciklusban mindig 1 tényezővel szorzunk csak 
+        // 1. lefutás:          változó = változó * 1
+        // 2. lefutás:          változó = változó * 2
+        // 3. lefutás:          változó = változó * 3 
+        const n = 4
+        let eredmeny = 1 // ebbe fogom tárolni a szorzatom értékét (bármit 1-gyel szorzok önmaga)
+        for(let i = 1; i <= n; i = i + 1){ // i = 1, 2, 3, 4, 5
+            eredmeny = eredmeny * i // az eddigi szorzatot megszorzom a következő elemmel
+        }
+        console.log(n + '! = ' + eredmeny)
+    </script>
+
+    <h2>2. feladat</h2>
+    <p>
+        Készítsünk programot, amely összeadja az első 100 szám összegét, és a folyamat 
+        végén megjeleníti az eredményt a console-on! 
+    </p>
+    <script>
+        // 1 + 2 + 3 + ... + 98 + 99 + 100 => az első száz szám összege
+        const m = 100
+        let szum = 0 // ebben fogom tárolni az összeget (bármihez adok 0-t az önmaga marad)
+        for(let i = 1; i <= m; i++){
+            szum = szum + i // az eddig összeghez hozzáadom a rákövetkezet
+        }
+        console.log(szum)
+    </script>
+    <h2>3. feladat</h2>
+    <p>
+        Készítsünk programot, amely egy l konstansban rögzített számról eldönti, hogy prím-e. 
+        Prím szám: csak 1-gyel és önmagával osztható (~ az előbbi két számon kívül egyetlen 
+        számmal sem osztható maradék nélkül). 
+    </p>
+    <script>
+        const l = 190;
+        // 1-től (1 nincs benne) egészen a számig meg kell vizsgálni, hogy van-e osztója
+        // 199 % 2 != 0, 199 % 3 != 0, 199 % 4 != 0 ... 
+        let osztoDb = 0; // ebbe fogom tárolni, hogy hány osztót találtam (kezdetben 0, mivel
+        // a ciklus kezdete előtt 0 osztón van )
+        for(let i = 2; i < l; i++){
+            if(l % i == 0){
+                osztoDb = osztoDb + 1 // 1-et hozzá mivel egy újabb osztót találtam 
+            }
+        }
+        if(osztoDb === 0) console.log(l + ' szám prímszám.')
+        else console.log(l + ' szám nem prímszám.')
+
+        // break: ha cikluson belül ráfutunk egy break kulcsszóra, akkor a ciklusból kiugrunk
+        // és a ciklus utáni első utasításra adjuk a vezérlést (~mintha hamissá vált volna a
+        // feltétel arra a részre ugurnk)
+
+        // ha megtalálom az első osztót, akkor már biztosan nem lehet prím és kiugurunk
+        let primE = true // azt tároljuk, hogy a szám prím-e, feltételezem, hogy az 
+        for(let i = 2; i < l; i++){
+            if(l % i == 0){
+                primE = false // találtam osztót, tehát nem lehet prím
+                break // felesleges tovább vizsgálódni 
+            }
+        }
+        if(primE) console.log(l + ' szám prímszám.')
+        else console.log(l + ' szám nem prímszám.')
+    </script>
+    <h2>4. feladat</h2>
+    <p>
+        Sorsoljunk 10 véletlen számot a [-100;100] intervallumról! Határozzuk meg, 
+        (1) a sorosolt számok közül a negatív számok összegét. Határozzuk meg, hogy 
+        (2) hány páratlan számot generáltunk! Határozzuk meg (3) volt-e pozitív szám a 
+        generálatak között. 
+    </p>
+    <script>
+        // 1) Ciklus, amelyben generálunk 10 véletlen számot a [-100, 100] intervallumból.
+        //    -> 1 generálást 10 * ismétlek ciklussal 
+
+        let osszeg = 0 // ehhez fogom hozzaadni a negativ ertekeket   
+        let paratlanDb = 0 // ebben szamolom meg a paratlan számok darabszámát    
+        let vanPozitiv = false // feltelezem, hogy nem lesz pozitív a generáltak között       
+        for(let i = 1; i <= 10; i++){
+            let szam = Math.floor(Math.random() * 201) - 100 //  [0, 1[ => [0;200] => [-100;100]
+            
+            if(szam < 0){ // a szám negatív
+                osszeg = osszeg + szam
+            }
+            if(szam % 2 !== 0){ // a szám nem osztható 2-vel maradék nélkül => páratlan
+                paratlanDb = paratlanDb + 1
+            }
+            if(szam > 0){ // találok egy pozitív számot 
+                vanPozitiv = true // igaz, hiszen a szam most pozitiv 
+            }
+        }
+        console.log('A negatív számok összege: ' + osszeg)
+        console.log('A páratlan elemek száma: ' + paratlanDb)
+        console.log('Volt pozitív? ' + vanPozitiv)
+    </script>
+
+
+</body>
+</html>

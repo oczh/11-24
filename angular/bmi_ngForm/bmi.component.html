@@ -1,0 +1,16 @@
+<form #bmiForm="ngForm" (ngSubmit)="onSubmit(bmiForm)">
+    <input type="number" required min="10" max="200" name="suly" placeholder="súly (kg)" #suly="ngModel" ngModel><br>
+    <div *ngIf="!suly.valid && (suly.touched || suly.dirty)">
+        <span *ngIf="suly.errors?.['required']">A súly megadása kötelező.</span>
+        <span *ngIf="suly.errors?.['min']">A megadott súly túl kicsi, a legkisebb súly 10 lehet!</span>
+        <span *ngIf="suly.errors?.['max']">A megadott súly túl nagy, a legnagyobb súly 200 lehet!</span>
+    </div>
+
+    <input type="number" required min="140" max="195" name="magassag" placeholder="magasság (kg)" #mag="ngModel" ngModel><br>
+    <div *ngIf="!mag.valid && (mag.touched || mag.dirty)">
+        <span *ngIf="mag.errors?.['required']">A magasság megadása kötelező.</span>
+        <span *ngIf="mag.errors?.['min']">A megadott magasság túl kicsi, a legkisebb súly 140 lehet!</span>
+        <span *ngIf="mag.errors?.['max']">A megadott magasság túl nagy, a legnagyobb súly 195 lehet!</span>
+    </div>
+    <button type="submit" [disabled]="!bmiForm.valid">Beküldés</button>
+</form>

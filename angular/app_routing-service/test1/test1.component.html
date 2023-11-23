@@ -1,0 +1,21 @@
+<!-- ha a terméklista üres, akkor jelenjen meg a "Nincs egyetlen termék sem" szöveg, 
+ellenkező esetben táblázatos formában jelenjen meg a termék azonosítója, neve, ára -->
+<table *ngIf="items.length !== 0; else noData">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Név</th>
+            <th>Ár</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #noData>
+    <p>Nincs egyetelen termék sem!</p>
+</ng-template>

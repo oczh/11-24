@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <script>
+    let obj = {
+        aaa : {
+            2020 : 4,
+            '2021': 6
+        }
+    }
+    
+    console.log(obj)
+    console.log(obj.aaa)
+    console.log(obj.aaa[2020])
+    //rossz, de miért? console.log(obj[aaa])
+    obj.bbb = {}
+    obj.bbb[2020] = 7
+    console.log(obj)
+   </script> 
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyelvvizsga adatok</title>
+</head>
+<body>
+    <p>
+        1. Készítsünk olyan függvényt, amely segítségével nyelvvizsga eredmény objektumokat tudunk generálni. 
+        Egy nyelvvizsga elemei: nyelv (angol), szint(B2), irt(20), olvasott(10), hallott(12), beszelt(50)
+        A függvény az összes értéket paraméterben kéri be (nyelvvizsgaGeneral).  
+    </p>
+    <script>
+        // készítek egy függvényt, amely létrehoz és visszaad egy objektumot a nyelvvizsga adatokkal 
+        function nyelvvizsgaGeneral(nyelv, szint, irt, olvasott, hallott, beszelt){
+            let nyelyvvizsga = {
+                //nyelv: nyelv // létrehozok egy nyelv nevű mezőt, amely értéke legyen a nyelv paraméter értéke
+                // egyszerűsített lehetőség: ha változó (vagy akár paraméterek) értéke alapján állítjuk be
+                // a mezők értékét, és mező neve egybeesik a változó nevével, akkor azokat csak fel kell sorolni
+                nyelv, // => nyelv: <nyelv vált. értéke> (nyelv: nyelv)
+                szint, // szint: szint
+                irt,  // irt: irt
+                olvasott, // olvasott: olvasott
+                hallott, // hallott: hallott
+                beszelt // beszelt: beszelt 
+            }
+            return nyelyvvizsga // visszaadom a hívás helyére 
+        }
+    </script>
+    <p>
+        2. Készítsünk segédtöbmöt, amibe a lehetséges nyelveket, és nyelvvizsga szinteket tároljuk. 
+        (nylevek tömb elemi: angol, német, orosz, francia, kínai; szintek tömb: A1, A2, B1, B2, C1, C2). 
+        Készítsünk egy getRandomPont() függvényt, amely egy random egészet ad vissza a [0;100] intervallumról
+    </p>
+    <script>
+        const nyelvek = ['angol', 'német', 'orosz', 'francia', 'kínai'] // lehetséges nyelvek
+        const szintek = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] // lehetséges szintek 
+        function getRandomPont(){ // hívásra ad egy lehetséges részpontot 
+            return Math.floor(Math.random() * 101)
+        }
+    </script>
+    <p>
+        3. Készítsünk egy nyelvvizsgak tömböt, amelybe generáljunk 100 db nyelvvizsga eredményt 
+        random adatokkal feltöltve! 
+    </p>
+    <script>
+        // ! üres tömböt hozok létre, és 100 alkalommal meghívva a push-t újabb objektumot adok hozzá 
+        // ! ciklusban nyelvvizsgaGeneral függvényt => 
+        //          irt, hallott, olvasott, beszelt ---> getRandomPont
+        //          nyelv ------> sorsolok egy elemet az 5 elem közül (lehetséges index: 0, 1, 2, 3, 4)
+        //          szintek -------> sorsolok egy eleme a 6 elem közül (lehetséges index: 0, 1, 2, 3, 4, 5)
+
+        // 1) létrehozom az üres tömböt 
+        const nyelvvizsgak = [] 
+
+        // 2) szervezek egy ciklust ami 100-szor lefut 
+        for(let i = 0; i < 100; i++){
+            // 2.1 segédváltozóba választok egy véletlen nyelvet
+            let nyelvIndex = Math.floor(Math.random() * nyelvek.length)
+            let nyelv = nyelvek[nyelvIndex]
+
+            // 2.2 segédváltozóba választok egy véletlen szintet 
+            let szintIndex = Math.floor(Math.random() * szintek.length)
+            let szint = szintek[szintIndex]
+
+            // 2.3 ... generálok segédváltozókba 4 pontértéket
+            let hallott = getRandomPont()
+            let olvasott = getRandomPont()
+            let beszelt = getRandomPont()
+            let irt = getRandomPont()
+
+            // meghívom a objektum generáló függvényt a fenti értékekkel, és az eredményt elmentem egy segédv. 
+            let ujNyelvvizsga = nyelvvizsgaGeneral(nyelv, szint, irt, olvasott, hallott, beszelt)
+
+            // a nylevvizsga segédváltozót hozzáadom a tömbhöz 
+            nyelvvizsgak.push(ujNyelvvizsga)
+        }
+    </script>
+    <p>
+        4. Listázzuk a console a nyelvvizsgak tömbben szereplő nyelvvizsgáinak szint értkét!
+    </p>
+    <script>
+        // menjünk végig a tömbön, minden egyes tömbelem esetén logoljuk a consolra a nyelvvizsga szintjét
+        // a tömbben objektumok vannak 
+        //  --> kijelöm a tömb egy elemét (sorszám segítségével)
+        //      --> az adott tömbelem most egy objektum, így számos mezője és függvénye lehet, így 
+        //          az obj. belül azonosítani kell, akivel konkrétan dolgozni szeretnék (. operátor)
+        for(let i = 0; i < nyelvvizsgak.length; i++){
+            console.log(nyelvvizsgak[i].szint)
+        }
+    </script>
+    <p>
+        5. Határozzuk meg, hogy hányan tettek vizsgát angol nyelvből! 
+    </p>
+    <script>
+        let angolDb = 0
+        for(let i = 0; i < nyelvvizsgak.length; i++){
+            if(nyelvvizsgak[i].nyelv === 'angol'){
+                angolDb++
+            }
+        }
+        console.log('Angol nyelvű vizsgák száma: ' + angolDb)
+    </script>
+    <p>
+        6. Határozzuk meg, hogy hányan tettek vizsgát angol nyelvből B2 szintű nyelvvizsgát! 
+    </p>
+    <script>
+        let angolB2Db = 0
+        for(let i = 0; i < nyelvvizsgak.length; i++){
+            if(nyelvvizsgak[i].nyelv === 'angol' && nyelvvizsgak[i].szint === 'B2'){
+                angolB2Db++
+            }
+        }
+        console.log('Angol B2 vizsgák száma: ' + angolB2Db)
+    </script>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2. feladat - JS programozási nyelv</title>
+    <script src="fajlkezeles.js"></script>
+    <script>
+        const URL = '/minta_2.feladathoz.csv'
+        const METHOD = 'GET'    
+        
+        let request = new XMLHttpRequest()
+        request.onload = function(){
+            if(request.status === 200){
+                //console.log('Eredmény: ' + request.responseText)
+                legmelegebb(feldolgoz(request.responseText), 2022)
+                evesAtlag(feldolgoz(request.responseText), 2022)
+                evente_hanyNapon_meres(feldolgoz(request.responseText))
+                leghidegebb_adottNapon(feldolgoz(request.responseText), '2020-05-11');
+                hanyszor_homerseklet(feldolgoz(request.responseText), -1.3)
+            } 
+            else console.log('Hibaüzenet: ' + request.statusText)
+        }
+        request.open(METHOD, URL)
+        request.send()
+    </script>
+</head>
+<body>
+   
+</body>
+</html>

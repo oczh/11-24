@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch api</title>
+</head>
+<body>
+    <script>
+        // a fetch() segítésével bármilyen típusú http kérést végre tudunk hajtani 
+        const URL = 'https://jsonplaceholder.typicode.com/posts';
+        const METHOD = 'GET';
+        let apiCall = fetch(URL, {method: METHOD}) // kérés paramétereit itt rögzítjük 
+
+        // ha az apiCall sikeresen végrehajtásra kerül, akkor alert-ben írjuk ki, hogy oké, 
+        // ha a végrehajtás sikertelen, akkor alert-ben írjuk ki, hogy hiba 
+        apiCall
+            .then((function (result){  // resolve => ezt hívjuk siker esetén 
+                // attól, hogy ez az ág fut le, még nem biztos, hogy rendben is, meg kell vizsgálnum a státuszt
+                if(result.status !== 200) throw new Error('A kérés rossz kóddal jött vissza: ' + result.status);
+                
+                // body-ban vannak az adatok streamben, ezért ki kell onnan olvasni 
+                return result.json(); 
+            }))
+                .then(function (data) { // ez az ág a result.json() eredményét dolgozza fel 
+                    console.log(data);
+                })
+            .catch(function(error){ // reject => ezt hívjuk ha hiba volt 
+                alert('hiba')
+            })
+    </script>
+</body>
+</html>

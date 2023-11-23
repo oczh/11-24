@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Óra</title>
+</head>
+<body>
+    <h2>1. feladat</h2>
+    <p>
+        Készítsünk egy olyan bekezdést, ami az akutális dátum/időt mutatja! 
+    </p>
+    <p id="ora"></p>
+    <script>
+       const oraP = document.getElementById('ora') // visszakeres az ora id-vel rendelkezo html elemet
+       /* while(true){ // jó ötletnek tűnt, de lefagy tőle a böngésző, az oldal sosem kerül betöltésre 
+            const most = new Date() // lekértem a most változóba az aktuális dátumidőt
+            oraP.innerText = most.toLocaleString('hu-HU') // adott lokalizációnak megfelelően írom ki szövegesen 
+        }
+       */
+
+       // időzített futtatás: setTimeout(callback, időzítés ms-ben): adott ms után egyszer lefut a callback fgv
+       //                     setInterval(callback, időzítés ms-ben): adott ms után folyamatosan lefut a callback
+       //                     fgv (mindaddig fut, amíg le nem állítjuk az Interval futását )
+
+       function pontosIdoMutat(){ // fgv definíció: megmondom, hogy mit csinál a függvény 
+            const most = new Date() // lekértem a most változóba az aktuális dátumidőt
+            oraP.innerText = most.toLocaleString('hu-HU') 
+       }
+       pontosIdoMutat() // fgv hívás: vérehajtom a függvény utasításit, hogy lefussanak 
+       // mp-ként meghívom a pontos idő mutat fgv-t 
+       setInterval(pontosIdoMutat, 1 * 1000) // fgv referencia: rámutatunk a függvény helyére, hogy a setInterval majd meg tudja hívni 
+    </script>
+    <h2>2. feladat</h2>
+    <p>
+        Készítsünk olyan megoldást, amely 15 percről számol visszafelé, amíg el nem fogynak a másodpercek. 
+        A visszaszámlás: pp:mm formában kerüljön megjelenítésre! 
+    </p>
+    <p id="stopper1"></p>
+    <script>
+        let ido = 1 * 60 // 15 perc mp-be való váltása 
+        const stopper1P = document.getElementById('stopper1')
+        function stopper1(){
+            if(ido > 0) ido--
+            let [p, mp] = mpAtvalt(ido)
+            if(p < 10) p = '0' + p
+            if(mp < 10) mp = '0' + mp
+            stopper1P.innerText = p + ':' + mp
+        }
+
+        function mpAtvalt(mp){
+            // vissaztérési érték: egy olyan tömb, amely első eleme az mp-ből kapott egész percek száma, 
+            // második eleme pedig a maradék mp-k 
+            //  45 => [0, 45]
+            //  72 => [1, 12]
+            // 125 => [2, 5] 
+            let ujP = Math.floor(mp / 60)
+            let ujMp = mp % 60 
+
+            return [ujP, ujMp]
+        }
+
+        setInterval(stopper1, 1 * 1000)
+    </script>
+    <h2>3. feladat</h2>
+    <p>Készítsük el úgy az óra alkalmazást, hogy az óra indítása és megállítása is gombhoz legyen kötve</p>
+    <button id="ora2Start">Start</button>
+    <button id="ora2Stop">Stop</button>
+    <div id="ora2"></div>  
+    <script>
+        // az ütemezőések törlése: interval esetén - clearInterval, timeout esetén - clearTimeout, és a 
+        // a függvények paramétere az időzítő azonosítója, amit a setInterval, setTimeout ad vissza 
+
+        // elem visszakerésése után callback techika segítségvel be tudjuk illeszteni, hogy adott elem 
+        // esetén adott esemény bekövetkezésekor melyik függvényt hívja meg a js 
+        let ora2IntervalId = undefined
+        const startB = document.getElementById('ora2Start')
+        startB.onclick = function (){ // onclick "változóba" elhelyezem a függvénykifejezést, amit végre kell hajtani az esemény bekövetkezésekor 
+            ora2IntervalId = setInterval(pontosIdoMutat2, 1 * 1000)
+        }
+
+        const ora2Div = document.getElementById('ora2')
+        function pontosIdoMutat2(){
+            const most = new Date()
+            ora2Div.innerText = most.toLocaleString('hu-HU')
+        }
+
+        const stopB = document.getElementById('ora2Stop')
+        stopB.onclick = function (){
+            clearInterval(ora2IntervalId)
+            ora2Div.innerText = ''
+        }
+    </script>
+    <h2>4. feladat</h2>
+    <p>
+        A 15 perces visszaszámlálót lehessen szüneteltetni (azaz automatikusan elindul, gombnyomásra leáll
+        majd újabb gombnyomásra elindul a korábbi aktuális érétktől)
+    </p>
+    <div id="stopper2"></div>
+    <button id="szunet">Szünet/folytat</button>
+    <script>
+        const stopper2Div = document.getElementById('stopper2')
+        let stopperIdo = 15 * 60
+        let stopperId = undefined
+        
+        const szunetButton = document.getElementById('szunet')
+        szunetButton.onclick = function(){
+            if(stopperId === undefined){
+                stopperId = setInterval(stopperFrissit, 1 * 1000)
+            }
+            else{
+                clearInterval(stopperId)
+                stopperId = undefined
+            }
+        }
+
+        function stopperFrissit(){
+            if(stopperIdo === 0 && stopperId !== undefined){
+                clearInterval(stopperId)
+                return 
+            }
+
+            stopperIdo-- 
+            let [ujP, ujMP] = mpAtvalt(stopperIdo)
+            if(ujP < 10) ujP = '0' + ujP
+            if(ujMP < 10) ujMP = '0' + ujMP
+
+            stopper2Div.innerText = ujP + ':' + ujMP
+        }
+        stopperId = setInterval(stopperFrissit, 1 * 1000)
+        
+
+    </script>
+
+</body>
+</html>

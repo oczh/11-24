@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post küldés</title>
+</head>
+<body>
+    Készítsünk egy űrlapot egy egysoros és egy többsoros 
+    beviteli mezővel és egy gombbal. Az űrlap beküldésénél olvassuk ki 
+    két segédváltozóba az űrlapmezők értékét. 
+
+    <form id="form">
+        <input type="text" id="title"><br>
+        <textarea id="body"></textarea><br>
+        <button type="submit">Beküld</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('form');
+        form.onsubmit = function(){
+            const title = document.getElementById('title').value;
+            const body = document.getElementById('body').value;
+
+            sendPostRequest(title, body);
+           
+            return false; // letiltom az űrlap bekülédést a szerver oldalra 
+        }
+
+        function sendPostRequest(title, body){
+            let postReq = new XMLHttpRequest();
+            postReq.onload = function(){
+                console.log(postReq.status);
+            }
+            postReq.open('POST', 'https://jsonplaceholder.typicode.com/posts');
+            let param = 'title=' + title + '&body=' + body;
+            postReq.send(param); // paraméterben odaadom a post kérés paramétereit 
+        }
+    </script>
+</body>
+</html>

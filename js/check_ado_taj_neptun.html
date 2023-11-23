@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adatbevitel</title>
+</head>
+<body>
+    <p>
+        Készítsünk űrlapot, amely alkalmas arra, hogy egy egyetemen az alapvető 
+        tanulói adatokat bekérjük (név, neptun kód, TAJ szám, adóazonosító jel)!
+    </p>
+    <input type="text" id="hallg_nev" placeholder="Hallgató neve"><br>
+    <input type="text" id="hallg_neptun" placeholder="Hallgató Neptun kódja"><br>
+    <input type="text" id="hallg_taj" placeholder="Hallgató TAJ száma"><br>
+    <input type="text" id="hallg_ado" placeholder="Hallgató adóazonosítója"><br>
+    <button type="button" onclick="ellenoriz()">Ellenőriz</button>
+    <div id="hibak"></div>
+    <script>
+        function ellenoriz(){
+            const hibaDiv = document.getElementById('hibak')
+            hibaDiv.innerText = ''
+            const nev = document.getElementById('hallg_nev').value
+
+            const neptun = document.getElementById('hallg_neptun').value
+            // készítsünk egy logikai visszatérésű függvényt (checkNeptun néven)
+            // amely visszaadja, hogy az ellenőrzött szöveg lehet-e neptun kód
+            // 6 karakter, angol ábécé nagybetűi + számjegyek fordulhatnak elő
+            // első karakter mindenképpen betűi 
+            // 'A' <= karakter és karakter <= 'Z', => A-Z között van 
+            // '0' <= karakter és karakter <= '9'  => 0-9 között van
+            if(!checkNeptun(neptun)){
+                hibaDiv.innerText += 'Helytelen a Neptun kód. '
+            }
+            else{
+                hibaDiv.innerText += 'A Neptun kód helyes. '
+            }
+
+            // checkTaj: eldönti egy lehetséges szövegről, hogy taj szám-e 
+            // 9 számjegy alkotja, ellenőrző összeg: a páros indexen lévőket 
+            // hárommal, a páratlan indexen lévőket 7-tel szorzozzuk és vesszük 
+            // a szorzatösszeget (utolsó jegy kivételével). Ha az összeg 10-zel 
+            // vett osztási maradéka megyegyzik az utolsó számjeggyel, akkor elfogadjuk. 
+            const taj = document.getElementById('hallg_taj').value
+            if(!checkTaj(taj)){
+                hibaDiv.innerText += 'A taj szám helytelen.'
+            }
+            else{
+                hibaDiv.innerText += 'A taj szám helyes.'
+            }
+
+            // adóazon (string): 10 számjegy alkotja, az első karaktere 8, 
+            // ellenőrző: az index+1 értékkel szorozzuk a pozíción az értéket, ezeket
+            // összegezzük (kivéve az utolsó), ha a szorzat 11 vett osztási maradéka
+            // megegyzik az utolsó számjeggyel akkor elfogadjuk
+            const adoazon = document.getElementById('hallg_ado').value
+            if(!checkAdoazon(adoazon)){
+                hibaDiv.innerText += 'Az adóazon szám helytelen.'
+            }
+            else{
+                hibaDiv.innerText += 'Az adóazon szám helyes.'
+            }
+         }
+
+         function checkAdoazon(adoazon){
+            if(arguments.length !== 1){
+                throw new Error('A checkAdoazon 1 paramétert vár!')
+            }
+            if(typeof adoazon !== 'string'){
+                throw new Error('A checkAdoazon 1 SZÖVEG paramétert vár!')
+            }
+            if(adoazon.length !== 10){
+                return false
+            }
+
+            const adoazonKarakterek = adoazon.split('')
+            if(adoazonKarakterek[0] !== '8'){
+                return false 
+            }
+            for(let i = 0; i < adoazonKarakterek.length; i++){
+                if(!szamjegyE(adoazonKarakterek[i])) return false
+            }
+
+            let osszeg = 0
+            for(let i = 0; i < adoazonKarakterek.length - 1; i++){
+                osszeg = osszeg + parseInt(adoazonKarakterek[i]) * (i + 1)
+            }
+            return osszeg % 11 === parseInt(adoazonKarakterek[adoazonKarakterek.length - 1])
+         }
+
+         function szamjegyE(karakter){
+            if(arguments.length !== 1){
+                throw new Error('A szamjegyE egy paramétert vár!')
+            }
+            if(typeof karakter !== "string"){
+                throw new Error('A szamjegyE egy karakter paramétert vár!')
+            }
+            if(karakter.length !== 1){
+                throw new Error('A szamjegyE-nek csak egy karakter adható át!')
+            }
+            return '0' <= karakter && karakter <= '9'
+         }
+
+         function checkTaj(taj){
+            if(arguments.length !== 1){
+                throw new Error('A checkTaj 1 paraméterrel hívható csak!')
+            }
+            if(typeof taj !== "string"){
+                throw new Error('A tajszám csak szöveges típusú lehet')
+            }
+
+            if(taj.length !== 9){
+                return false
+            }
+            const tajKarakterek = taj.split('')
+            let osszeg = 0
+            for(let i = 0; i < tajKarakterek.length - 1; i++){
+                if(!('0' <= tajKarakterek[i] && tajKarakterek[i] <= '9')){
+                    return false
+                }
+                if(i % 2 == 0){ // páros
+                    osszeg = osszeg + parseInt(tajKarakterek[i]) * 3
+                }
+                else{ // páratlan
+                    osszeg = osszeg + parseInt(tajKarakterek[i]) * 7
+                }
+            }
+            return parseInt(tajKarakterek[tajKarakterek.length - 1]) === (osszeg % 10)
+         }
+
+         function checkNeptun(neptunKod){ // paraméterben kapja a vizsgálandó kódot 
+            if(arguments.length !== 1){
+                throw new Error('A checkNeptun 1 paraméterrel hívható csak!')
+            }
+            if(typeof neptunKod !== 'string'){
+                throw new Error('A checkNeptun paramétere csak szöveg lehet!')
+            }
+
+            if(neptunKod.length !== 6){ // 6 karakteres kell, hogy legyen 
+                return false
+            }
+            const neptunKarakterek = neptunKod.split('') // karatkerekre bontom a paraméter
+            if(!('A' <= neptunKarakterek[0]  && neptunKarakterek[0] <= 'Z')){ // nem betű az első karakter
+                return false
+            }
+            for(let i = 1; i <neptunKarakterek.length; i++){
+                // az összes többi lehet vagy számjegy vagy betű
+                if(!(('A' <= neptunKarakterek[i] && neptunKarakterek[i] <= 'Z') ||
+                     ('0' <= neptunKarakterek[i] && neptunKarakterek[i] <= '9'))){
+                        return false
+                   }
+            }
+
+            return true
+         }
+    </script>
+</body>
+</html>

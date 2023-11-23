@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="ujTeendo" placeholder="Új teendő">
+    <button type="button" onclick="mentes()">Mentés</button>
+    <h2>Teendők:</h2>
+    <ul id="teendok"></ul>
+
+    <script>
+        const ujTeendoInput = document.getElementById('ujTeendo')
+        const teendokUl = document.getElementById('teendok')
+
+        function mentes(){
+            const ujTeendo = ujTeendoInput.value
+            //teendokUl.innerHTML += '<li>' + ujTeendo + '</li>'
+            const ujLi = document.createElement("li")
+            ujLi.innerText = ujTeendo
+            ujLi.onclick = liClick
+            teendokUl.appendChild(ujLi)
+            ujTeendoInput.value = ''
+        }    
+
+        function liClick(){
+            this.remove()
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Függvény szintaxis használat</title>
+</head>
+<body>
+    <h2>1. feladat</h2>
+    <p>
+        Készítsünk új függvényt, amely a paraméterben kapott a és b szám között 
+        generál egy véletlen egészt. 
+    </p>
+    <ul>
+        <li>A függvény hívható 2 paraméterrel ekkor a két paraméter között generálunk</li>
+        <li>A függvény hívható 1 paraméterrel is, ekkor a felső határ legyen 1000000</li>
+        <li>A függvény hívható paraméter nélkül is, ekkore 1 és 1000000 között generálunk</li>
+    </ul>
+    <p>
+        Oldjuk meg függvénnyel, függvény kifejezéssel és lamba kifejezéssel is a feladatot! 
+    </p>
+    <script>
+        // 1) egyszerű fgv szintaxis 
+        function veletlenSzam1(min = 1, max = 1000000){  // függvén def: megmondom, hogy hogyan a függvény
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+        console.log('veletlenSzam1: ' + veletlenSzam1()) // függvény hívás: végrehajtom a függvény utasításait
+
+        // 2) függvény kifejezés 
+        const veletlenSzam2 = function(min = 1, max = 1000000){ // függvénydef, ami bekerül egy változóba 
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+        console.log(veletlenSzam2) // a fgv def van benne 
+        console.log(typeof veletlenSzam2) // function típus
+        console.log(veletlenSzam2 instanceof Function) // true, mivel egy Function elemről van szó 
+        // a vátozó/konstans, ami függvény tartalmaz ugyanúgy meghívható, mint egy egyszerű függvény 
+        console.log('veletlenSzam2: ' + veletlenSzam2()) // függvény hívás
+
+        // 3) függvény lambda kifejezéssel 
+        //const veletlenSzam3 = (min = 1, max = 1000000) => {return Math.floor(Math.random() * (max - min + 1)) + min}
+        // mivel egy utasítás van, így elhagyható a return + a {} is 
+        const veletlenSzam3 = (min = 1, max = 1000000) => Math.floor(Math.random() * (max - min + 1)) + min
+        console.log(veletlenSzam3) // fgv def
+        console.log(typeof veletlenSzam3) // function 
+        console.log(veletlenSzam3 instanceof Function) // true 
+        console.log('veletlenSzam3: ' + veletlenSzam3())
+
+        // 4) Function konstruktor hívással (függvény hívással) !!! MŰKÖDIK, DE NE HASZNÁLJUK !!! 
+        const veletlenSzam4 = new Function(
+            'min = 1', 'max = 1000000', 
+            'return Math.floor(Math.random() * (max - min + 1)) + min')
+        console.log(veletlenSzam4) // fgv van benne
+        console.log(typeof veletlenSzam4) // function
+        console.log(veletlenSzam4  instanceof Function) // true 
+        console.log('veletlenSzam4:' + veletlenSzam4())
+    </script>
+
+</body>
+</html>

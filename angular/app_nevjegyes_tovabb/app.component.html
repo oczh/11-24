@@ -1,0 +1,7 @@
+<!-- a fő komponensünkhöz hozzáadom a navigációt, amely segítségével a menü megvalósítható -->
+<a [routerLink]="['home']">Kezdőoldal </a> 
+<a [routerLink]="['users']">Felhasználók listázása </a> 
+<a [routerLink]="['users/add']">Felhasználók rögzítése </a> 
+
+<!-- a forgalirányítás hatására, hogy hol jelenjen meg a komponens, azt a Router-outlet direktíva határozza meg-->
+<router-outlet></router-outlet>

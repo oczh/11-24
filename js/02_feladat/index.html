@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>2. feladat</title>
+        <script src="./src/fajlkezeles.js"></script>
+        <script src="./src/statisztika.js"></script>
+        <script>
+            window.onload = () => {
+                const METHOD = 'GET';
+                const URL = './data/minta.csv';
+
+                const request = new XMLHttpRequest();
+                request.onload = () =>{
+                    const adatok = feldolgoz(request.responseText);
+                    getLeghidegebb(adatok, new Date(2022, 4, 11));
+                }
+                request.open(METHOD, URL);
+                request.send();
+            }
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

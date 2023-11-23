@@ -1,0 +1,25 @@
+<table>
+    <thead>
+        <tr>
+            <th>Cím</th>
+            <th>Tartalom</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items">
+            <td>{{item.title}}</td>
+            <td>{{item.body}}</td>
+        </tr>
+        <!-- dolgozzuk fel az item2 elemeit is (saját típus alapoján dolgozom )-->
+        <tr *ngFor="let item of items2">
+            <td>{{item.postTitle}}</td>
+            <td>{{item.postContent}}</td>
+        </tr>
+        <!-- dolgozzuk fel az item3 elemeit is (saját típus alapoján dolgozom )-->
+        <tr *ngFor="let item of items3">
+            <td>{{item.postTitle}}</td>
+            <td>{{item.postContent}}</td>
+        </tr>
+
+    </tbody>
+</table>

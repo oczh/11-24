@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottó</title>
+</head>
+<body>
+    <div id="talalt_db"></div>
+    <div id="uzenet"></div>
+    <script>
+        let felhasznaloiTipp = []
+        while(felhasznaloiTipp.length < 5){
+            let szam = parseInt(prompt('Kérek a következp tippet'))
+            if(!isNaN(szam) && szam >= 1 && szam <= 90){
+                let benneVan = false
+                for(let i = 0; i < felhasznaloiTipp.length; i++){
+                    if(felhasznaloiTipp[i] === szam){
+                        benneVan = true
+                        alert('ez a szám már volt, kérek egy másik számot!')
+                        break
+                    }
+                }
+                if (!benneVan) felhasznaloiTipp.push(szam)
+            }
+            else{
+                alert('nem megfelelő az érték!')
+            }
+        }
+        console.log(felhasznaloiTipp)  
+        let otNyeroszam = []
+        for(let i = 0; i < 5; i++){
+            let nyeroszam = Math.floor(Math.random () * 90 + 1 )
+            let vanmar = false
+                for(let j = 0; j < 5; j++){
+                    if(otNyeroszam[j] === nyeroszam){
+                        vanmar = true
+                    }
+                }
+            if (!vanmar) otNyeroszam.push(nyeroszam)                 
+        }
+        console.log(otNyeroszam)
+        let talalat = 0
+        for(let a = 0; a < 5; a++){
+            for(let b = 0; b < 5; b++){
+                if(felhasznaloiTipp[a] === otNyeroszam[b]){
+                    talalat = talalat + 1
+                }
+            }
+        }
+        console.log(talalat)
+        const talalatdb = document.getElementById("talalt_db")
+        talalatdb.innerText = 'Talalátok száma: ' + talalat
+        if(talalat < 2){
+            uzenet = "Sajnos nem sikerült"
+        }
+        else if(talalat < 4){
+            uzenet = "Nyertél, de lesz ez még jobb is"
+        }
+        else if(talalat = 4){
+            uzenet = "Majdnem telitalálat"
+        }  
+        else if(talalat = 5){
+            uzenet = "Telitalálat"
+        }
+        console.log(uzenet)
+        const szovegesuzenet = document.getElementById("uzenet")
+        szovegesuzenet.innerText = uzenet
+    </script>
+</body>
+</html>
